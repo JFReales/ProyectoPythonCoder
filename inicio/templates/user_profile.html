@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Perfil de Usuario{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Perfil de {{ user.username }}</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Formulario para los datos del usuario (nombre, apellido, email) -->
+        <h3>Datos del usuario</h3>
+        {{ user_form.as_p }}
+    
+        <!-- Formulario para los datos del perfil (avatar, fecha de nacimiento, etc.) -->
+        <h3>Datos del perfil</h3>
+        {{ profile_form.as_p }}
+    
+        <button type="submit">Guardar cambios</button>
+    </form>
+    
+    
+    {% if profile.avatar %}
+        <img src="{{ profile.avatar.url }}" alt="Avatar" width="150">
+    {% endif %}
+</div>
+{% endblock %}

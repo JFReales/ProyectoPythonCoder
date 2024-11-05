@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<header class="masthead bg-primary text-white text-center">
+    <div class="container d-flex align-items-center flex-column">        
+        {% if not user.is_authenticated %}
+        <a href="{% url 'login' %}" class="btn btn-light btn-lg mt-4">Iniciar Sesión</a>
+        <a href="{% url 'register' %}" class="btn btn-secondary btn-lg mt-2">Registrarse</a>
+        {% else %}
+        <h1 class="masthead-heading text-uppercase mb-0">Bienvenido, {{ user.username }}</h1>
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <a href="{% url 'insertar_mascota' %}" class="btn btn-primary">Agregar Mascota</a>
+        <a href="{% url 'buscar_mascota' %}" class="btn btn-secondary">Ver Mascotas</a>
+        {% endif %}
+    </div>
+</header>
+{% endblock %}
