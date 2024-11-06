@@ -50,16 +50,17 @@ def insertar_mascota(request):
 class MascotaListView(ListView):
     model = Mascota
     template_name = 'buscar_mascota.html'
-    context_object_name = 'mascotas' 
-
+    context_object_name = 'mascotas'
+     
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
+            user = form.save() 
+            UserProfile.objects.get_or_create(user=user)
+            login(request, user)  
             messages.success(request, 'Registro exitoso. ¡Bienvenido!')
-            return redirect('inicio')  
+            return redirect('inicio')
     else:
         form = UserCreationForm()
     
@@ -69,7 +70,7 @@ def register(request):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance)
+        UserProfile.objects.get_or_create(user=instance)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
